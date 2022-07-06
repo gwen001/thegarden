@@ -1,0 +1,36 @@
+
+input:invalid {
+    /* border: 1px solid #F00; */
+}
+
+#header {
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+#flashmessage {
+    height: 50px;
+    margin-bottom: 30px;
+}
+
+#p-products-show .full-descr {
+    text-align: justify;
+}
+
+#p-carts-show .lorem {
+    font-size: 0.6em;
+    text-align: justify;
+}
+/* #p-carts-show .blabla {
+    font-size: 1em;
+    text-align: justify;
+} */
+
+#p-orders-create .lorem {
+    font-size: 0.6em;
+    text-align: justify;
+}
+/* #p-orders-create .blabla {
+    font-size: 1em;
+    text-align: justify;
+} */
