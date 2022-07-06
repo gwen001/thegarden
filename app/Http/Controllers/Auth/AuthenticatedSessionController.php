@@ -32,7 +32,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $r = $request->input('r',null);
+
+        if( is_null($r) ) {
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } else {
+            return redirect($r);
+        }
     }
 
     /**

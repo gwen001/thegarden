@@ -14,6 +14,7 @@
 
                 <form action="{{ route('login') }}"  method="POST">
                     @csrf
+                    <input type="hidden" name="r" value="{{ request()->get('r') }}">
 
                     <!-- UserName -->
                     <div class="mb-3 row">
