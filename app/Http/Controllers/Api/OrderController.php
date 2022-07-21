@@ -139,7 +139,7 @@ class OrderController extends Controller
      *                 @OA\Property(
      *                     property="cart",
      *                     type="string"
-     *                 ),
+     *                 )
      *             )
      *         )
      *      ),
