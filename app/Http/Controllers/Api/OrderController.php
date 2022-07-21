@@ -36,7 +36,7 @@ class OrderController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation"
-     *      ),
+     *      )
      * )
      */
     public function index(Request $request)
@@ -164,13 +164,6 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     /**
      * @OA\Get(
      *      path="/api/orders/{id}",
@@ -194,7 +187,7 @@ class OrderController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Not found"
-     *      ),
+     *      )
      * )
      */
     public function show($id)
