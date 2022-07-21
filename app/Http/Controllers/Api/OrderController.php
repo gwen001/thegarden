@@ -146,7 +146,7 @@ class OrderController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation"
-     *      ),
+     *      )
      * )
      */
     public function store(Request $request)
