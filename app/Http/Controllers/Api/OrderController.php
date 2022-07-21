@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Http\Resources\OrderResource;
 use DB;
@@ -16,6 +16,28 @@ class OrderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get(
+     *      path="/api/orders",
+     *      operationId="getOrdersList",
+     *      tags={"Orders"},
+     *      summary="Get list of orders",
+     *      description="Get list of orders",
+     *      @OA\Parameter(
+     *          name="user_id",
+     *          description="user id",
+     *          required=false,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     * )
      */
     public function index(Request $request)
     {
@@ -61,6 +83,72 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Post(
+     *      path="/api/orders",
+     *      operationId="createOrder",
+     *      tags={"Orders"},
+     *      summary="Create an order",
+     *      description="Create an order",
+     *      @OA\requestBody(
+     *          description="Data",
+     *          required=true,
+     *          @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="fullname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="zipcode",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="city",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="country",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="card_number",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="card_expiration",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="card_cvv",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="user_id",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="amount",
+     *                     type="number"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="cart",
+     *                     type="string"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     * )
+     */
     public function store(Request $request)
     {
         $datas = $request->post();
@@ -76,6 +164,39 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    /**
+     * @OA\Get(
+     *      path="/api/orders/{id}",
+     *      operationId="getOrder",
+     *      tags={"Orders"},
+     *      summary="Get a single order",
+     *      description="Get a single order",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="order id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *      ),
+     * )
+     */
     public function show($id)
     {
         $q = "SELECT * FROM orders WHERE id='".$id."'";
@@ -83,7 +204,12 @@ class OrderController extends Controller
         $datas = DB::select($q);
         // var_dump($datas);
 
+        if( !$datas || !is_array($datas) || !count($datas) ) {
+            return abort(404);
+        }
+
         $order = (new Order())->fill((array)$datas[0]);
+        $order->id = $datas[0]->id;
         $order->created_at = $datas[0]->created_at;
         $order->card_number = base64_decode($datas[0]->card_number);
         $order->cart = json_decode($datas[0]->cart,true);

@@ -74,14 +74,14 @@ class UserController extends Controller
         $user = Auth::user();
 
         $t_datas = $request->input();
-        var_dump($t_datas);
-
+        // var_dump($t_datas);
         unset( $t_datas['_token'] );
         unset( $t_datas['picture'] );
+        // var_dump($t_datas);
 
-        foreach( $t_datas as $k=>$v ) {
-            $user->$k = $v;
-        }
+        // foreach( $t_datas as $k=>$v ) {
+        //     $user->$k = $v;
+        // }
 
         if( $request->file() && count($request->file()) && isset($request->file()['picture']) )
         {
@@ -89,15 +89,19 @@ class UserController extends Controller
             if( $filename !== false ) {
                 $user->picture = $filename;
             }
+            $user->save();
         }
 
-        if( $user->save() ) {
+        $response = Http::withHeaders(['Content-Type: application/x-www-form-urlencoded'])->put(env('API_URL').'/users/'.$user->id, $t_datas);
+        // var_dump($response);
+
+        if( $response->ok() ) {
             Session::flash('success', 'Profile updated.');
-            return redirect()->route('users.edit');
         } else {
             Session::flash('error', 'Something went wrong!');
-            return redirect()->route('users.edit');
         }
+
+        return redirect()->route('users.edit');
     }
 
     /**
@@ -120,11 +124,11 @@ class UserController extends Controller
             return false;
         }
 
-        echo 'File Name: '.$picture->getClientOriginalName()."\n";
-        echo 'File Extension: '.$picture->getClientOriginalExtension()."\n";
-        echo 'File Real Path: '.$picture->getRealPath()."\n";
-        echo 'File Size: '.$picture->getSize()."\n";
-        echo 'File Mime Type: '.$picture->getMimeType()."\n";
+        // echo 'File Name: '.$picture->getClientOriginalName()."\n";
+        // echo 'File Extension: '.$picture->getClientOriginalExtension()."\n";
+        // echo 'File Real Path: '.$picture->getRealPath()."\n";
+        // echo 'File Size: '.$picture->getSize()."\n";
+        // echo 'File Mime Type: '.$picture->getMimeType()."\n";
 
         $destinationPath = 'img/users';
         $filename = md5( uniqid() ) . '.' . $picture->getClientOriginalExtension();

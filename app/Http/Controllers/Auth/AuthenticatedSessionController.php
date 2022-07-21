@@ -55,6 +55,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        $r = $request->input('r',null);
+
+        if( is_null($r) ) {
+            return redirect('/');
+        } else {
+            return redirect($r);
+        }
     }
 }

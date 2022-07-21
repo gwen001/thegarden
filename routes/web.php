@@ -36,6 +36,7 @@ Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.
 // Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update')->where('id','[0-9]+')->middleware(['auth']);
 Route::patch('/orders/{id}', [OrderController::class, 'update'])->name('orders.update')->where('id','[0-9]+')->middleware(['auth']);
 Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy')->where('id','[0-9]+')->middleware(['auth']);
+Route::get('/orders/pdf/{id}', [OrderController::class, 'pdf'])->name('orders.pdf')->where('id','[0-9]+')->middleware(['auth']);
 
 Route::get('/cart/show', [CartController::class, 'show'])->name('cart.show');
 Route::post('/add-to-cart', [CartController::class, 'addProduct'])->name('cart.add.product');

@@ -71,21 +71,58 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Put(
+     *      path="/api/users/{id}",
+     *      operationId="updateUser",
+     *      tags={"Users"},
+     *      summary="Update a user",
+     *      description="Update a user",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="user id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\requestBody(
+     *          description="Data",
+     *          required=true,
+     *          @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="fullname",
+     *                     type="string"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     * )
+     */
     public function update(Request $request, $id)
     {
-        // $user = User::find($id);
-        // if( !$user ) {
-        //     return abort(404);
-        // }
+        $user = User::find($id);
+        if( !$user ) {
+            return abort(404);
+        }
 
-        // foreach( $request->all() as $k=>$v ) {
-        //     if( $k != '_token' ) {
-        //         // echo $k.'='.$v."\n";
-        //         $user->$k = $v;
-        //     }
-        // }
+        // var_dump($request->all());
+        foreach( $request->all() as $k=>$v ) {
+            $user->$k = $v;
+        }
 
-        // return $user->save();
+        return $user->save();
     }
 
     /**

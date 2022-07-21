@@ -8,8 +8,11 @@
         <div class="col col-8">
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Order Ref.</label>
-                <div class="col-sm-10">
+                <div class="col-sm-7">
                     <span class="form-control-plaintext"><b>{{ $order->uniqid }}</b></span>
+                </div>
+                <div class="col-sm-3 text-end">
+                    <a href="{{ route('orders.pdf',$order->id) }}" class="btn btn-warning">Download PDF</a>
                 </div>
             </div>
             <div class="mb-3 row">

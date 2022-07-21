@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Storage;
+use PDF;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Cart;
@@ -155,5 +157,82 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Generate PDF of the resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pdf($id)
+    {
+        $response = Http::get(env('API_URL').'/orders/'.$id);
+
+        if( !$response->ok() ) {
+            return abort(404);
+        }
+
+        $order = $response->object()->data;
+
+        foreach( $order->cart as $pkey=>$pcart )
+        {
+            if( $pkey == 'compute' ) {
+                continue;
+            }
+            $order->cart->$pkey->product = Product::find($pcart->product_id);
+        }
+        // var_dump($order);
+
+        $m = preg_match_all( '#<iframe.*></iframe>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
+        if( $m ) {
+            // var_dump($t_iframes);
+
+            $m = preg_match_all( '#src=["\']?([^"\'> ]+)["\']?#', $t_iframes[0][0][0], $tmp );
+
+            if( $m )
+            {
+                $url = $tmp[1][0];
+                // $url = '/etc/hosts';
+                // $url = 'http://10degres.net/assets/img/avatar.jpg';
+                // $url = 'file:///etc/hosts';
+                // $url = 'http://127.0.0.1';
+
+                $start = substr( $order->address, 0, $t_iframes[0][0][1] );
+                $end = substr( $order->address, $t_iframes[0][0][1]+strlen($t_iframes[0][0][0]) );
+                // var_dump($start);
+                // var_dump($end);
+                // var_dump($url);
+
+                $content = @file_get_contents( $url );
+
+                if( stripos($url,'http') === 0 ) {
+                    $t_headers = get_headers($url);
+                    foreach( $t_headers as $h ) {
+                        if( stripos($h,'content-type') === 0 ) {
+                            $mime = $h;
+                        }
+                    }
+                } else {
+                    $mime = mime_content_type($url);
+                }
+                // var_dump($mime);
+
+                if( strpos($mime,'image/') !== false ) {
+                    $content = '<img src="data:image/png;base64,'.base64_encode($content).'">';
+                }
+                // var_dump($content);
+
+                $address = $start;
+                $address .= '<table border="1"><tr><td>'.$content.'</td></tr></table>';
+                $address .= $end;
+                // var_dump($address);
+
+                $order->address = $address;
+            }
+        }
+
+        $pdf = PDF::loadView('orders/pdf', compact('order'));
+        return $pdf->download('invoice.pdf');
     }
 }

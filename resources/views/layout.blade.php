@@ -29,6 +29,7 @@
                                 <li class="list-group-item border-0"><a href="{{ url('/dashboard') }}">My account</a></li>
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="r" value="{!! request()->get('r') !!}">
                                     <li class="list-group-item border-0"><a href="javascript:;" onclick="event.preventDefault();this.closest('form').submit();">{{ __('Log Out') }}</a></li>
                                 </form>
                             @else
