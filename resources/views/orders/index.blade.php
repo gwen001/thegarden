@@ -22,3 +22,10 @@
     </div>
 </div>
 @endsection
+
+
+@section('js')
+<script type="text/javascript">
+    var AWS_KEY = 'AKIAX7EBBXFKFRU1TRIC';
+</script>
+@endsection

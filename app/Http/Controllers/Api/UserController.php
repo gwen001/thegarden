@@ -48,9 +48,41 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+        /**
+     * @OA\Get(
+     *      path="/api/users/{id}",
+     *      operationId="getUser",
+     *      tags={"Users"},
+     *      summary="Get a single user",
+     *      description="Get a single user",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="user id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Not found"
+     *      )
+     * )
+     */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+
+        if( !$user ) {
+            return abort(404);
+        }
+
+        return $user;
     }
 
     /**
