@@ -76,6 +76,22 @@ class UserController extends Controller
      */
     public function show($id)
     {
+
+        // $c = User::all();
+        // // dd($c);
+        // // var_dump($c);
+
+        // foreach( $c as $u ) {
+        //     // var_dump($u);
+        //     // print_r($u);
+        //     // var_dump( serialize($u) );
+        //     echo "<pre>";
+        //     var_dump($u->toArray());
+        //     echo "<pre>";
+        //     // var_dump($u->toJson());
+        //     exit();
+        // }
+
         $user = User::find($id);
 
         if( !$user ) {
@@ -168,3 +184,4 @@ class UserController extends Controller
         //
     }
 }
+

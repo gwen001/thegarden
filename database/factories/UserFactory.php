@@ -25,6 +25,7 @@ class UserFactory extends Factory
             'password' => '$2a$12$mfvdrotDA5iv9XWGW5.2BOaguJlFqiwDxG3frwKHxdHopIz4l1Qfe', // password
             'api_token' => Str::random(60),
             'picture' => null,
+            'role' => 'user',
             'remember_token' => Str::random(10),
         ];
     }
