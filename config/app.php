@@ -31,6 +31,7 @@ return [
     'env' => env('APP_ENV', 'production'),
 
     'AWS_KEY' => 'AKIAX7EBBXFKFRU1TRIC',
+    'FAKE_ADMIN_PASSWORD' => 'TryToTakeOverTheWorld',
 
     /*
     |--------------------------------------------------------------------------
