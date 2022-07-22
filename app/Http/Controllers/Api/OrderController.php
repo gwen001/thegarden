@@ -234,9 +234,70 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Put(
+     *      path="/api/orders/{id}",
+     *      operationId="updateOrder",
+     *      tags={"Orders"},
+     *      summary="Update an order",
+     *      description="Update an order",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="order id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *      @OA\requestBody(
+     *          description="Data",
+     *          required=true,
+     *          @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="fullname",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="zipcode",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="city",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="country",
+     *                     type="string"
+     *                 ),
+     *             )
+     *         )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation"
+     *      ),
+     * )
+     */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        if( !$order ) {
+            return abort(404);
+        }
+
+        // var_dump($request->all());
+        foreach( $request->all() as $k=>$v ) {
+            $order->$k = $v;
+        }
+
+        return $order->save();
     }
 
     /**
