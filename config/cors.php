@@ -20,6 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => ['*'],
+    // 'allowed_origins' => ['http://10degres.net'],
 
     'allowed_origins_patterns' => [],
 
