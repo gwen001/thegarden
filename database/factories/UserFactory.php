@@ -20,10 +20,12 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->userName(), // overwrited in seeders/UsersSeeder.php
             'fullname' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->e164PhoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2a$12$mfvdrotDA5iv9XWGW5.2BOaguJlFqiwDxG3frwKHxdHopIz4l1Qfe', // password
-            'api_token' => Str::random(60),
+            'api_token' => Str::random(32),
             'picture' => null,
             'role' => 'user',
             'remember_token' => Str::random(10),

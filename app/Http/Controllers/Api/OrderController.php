@@ -25,12 +25,12 @@ class OrderController extends Controller
      *      summary="Get list of orders",
      *      description="Get list of orders",
      *      @OA\Parameter(
-     *          name="user_id",
-     *          description="user id",
-     *          required=false,
+     *          name="api_token",
+     *          description="token api",
+     *          required=true,
      *          in="query",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *          )
      *      ),
      *      @OA\Response(
@@ -41,28 +41,9 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $user_id = $request->query('user_id',null);
+        $user = Auth::user();
 
-        // if( is_null($user_id) ) {
-        //     $t_datas = DB::select('SELECT * FROM orders');
-        //     $t_orders = Order::orderBy('id','DESC')->get();
-        // } else {
-        //     $t_datas = DB::select("SELECT * FROM orders WHERE user_id='".$user_id."'");
-        // }
-
-        // $t_orders = [];
-        // foreach( $t_datas as $d ) {
-        //     // var_dump($d);
-        //     $t_orders[] = (new Order())->fill((array)$d);
-        // }
-
-        // return OrderResource::collection($t_orders);
-
-        if( is_null($user_id) ) {
-            $t_orders = Order::orderBy('id','DESC')->get();
-        } else {
-            $t_orders = Order::where('user_id',$user_id)->orderBy('id','DESC')->get();
-        }
+        $t_orders = Order::where('user_id',$user->id)->orderBy('id','DESC')->get();
 
         return OrderResource::collection($t_orders);
     }
@@ -90,6 +71,15 @@ class OrderController extends Controller
      *      tags={"Orders"},
      *      summary="Create an order",
      *      description="Create an order",
+     *      @OA\Parameter(
+     *          name="api_token",
+     *          description="token api",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\requestBody(
      *          description="Data",
      *          required=true,
@@ -152,6 +142,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $datas = $request->post();
+        unset( $datas['api_token'] );
         $datas['uniqid'] = Order::generateUniqid();
         $order = Order::create( $datas );
 
@@ -171,6 +162,15 @@ class OrderController extends Controller
      *      tags={"Orders"},
      *      summary="Get a single order",
      *      description="Get a single order",
+     *      @OA\Parameter(
+     *          name="api_token",
+     *          description="token api",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\Parameter(
      *          name="id",
      *          description="order id",
@@ -242,6 +242,15 @@ class OrderController extends Controller
      *      summary="Update an order",
      *      description="Update an order",
      *      @OA\Parameter(
+     *          name="api_token",
+     *          description="token api",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="id",
      *          description="order id",
      *          required=true,
@@ -293,7 +302,10 @@ class OrderController extends Controller
         }
 
         // var_dump($request->all());
-        foreach( $request->all() as $k=>$v ) {
+        $datas = $request->all();
+        unset( $datas['api_token'] );
+
+        foreach( $datas as $k=>$v ) {
             $order->$k = $v;
         }
 

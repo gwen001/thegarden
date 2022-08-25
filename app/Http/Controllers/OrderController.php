@@ -24,10 +24,7 @@ class OrderController extends Controller
     {
         $user = Auth::user();
 
-        $t_search = [];
-        $t_search['user_id'] = $user->id;
-
-        $response = Http::get(env('API_URL').'/orders',$t_search);
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$user->api_token])->get(env('API_URL').'/orders');
         // var_dump($response);
         $t_orders = $response->object();
 
@@ -85,7 +82,7 @@ class OrderController extends Controller
         // $t_datas['cart'] = json_encode($t_cart);
         // var_dump($t_datas);
 
-        $response = Http::post(env('API_URL').'/orders', $t_datas);
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$user->api_token])->post(env('API_URL').'/orders', $t_datas);
 
         if( $response->ok() ) {
             Cart::del();
@@ -105,7 +102,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $response = Http::get(env('API_URL').'/orders/'.$id);
+        $user = Auth::user();
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$user->api_token])->get(env('API_URL').'/orders/'.$id);
 
         if( !$response->ok() ) {
             return abort(404);
@@ -167,7 +165,8 @@ class OrderController extends Controller
      */
     public function pdf($id)
     {
-        $response = Http::get(env('API_URL').'/orders/'.$id);
+        $user = Auth::user();
+        $response = Http::withHeaders(['Authorization'=>'Bearer '.$user->api_token])->get(env('API_URL').'/orders/'.$id);
 
         if( !$response->ok() ) {
             return abort(404);

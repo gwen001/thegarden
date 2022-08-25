@@ -15,6 +15,12 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label class="col-sm-4 col-form-label">API token</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control-plaintext" value="{{ $user->api_token }}" readonly>
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">Email</label>
                     <div class="col-sm-8">
                         <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
@@ -24,6 +30,18 @@
                     <label class="col-sm-4 col-form-label">Full name</label>
                     <div class="col-sm-8">
                         <input type="text" name="fullname" class="form-control" value="{{ $user->fullname }}" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-4 col-form-label">Address</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="address" class="form-control" value="{{ $user->address }}" required>
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <label class="col-sm-4 col-form-label">Phone</label>
+                    <div class="col-sm-8">
+                        <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" required>
                     </div>
                 </div>
                 <div class="mb-3 row">

@@ -59,8 +59,13 @@ class UserController extends Controller
     public function edit()
     {
         $user = Auth::user();
+        // var_dump($user);
+        // exit();
 
-        return view('users/edit', compact('user'));
+        // $request->header->add($parameter);
+
+        return response()->view('users/edit', compact('user'));
+        // return response()->view('users/edit', compact('user'))->header('Access-Control-Allow-Origin', 'http://lo.glc.st')->header('Access-Control-Allow-Credentials', 'true');
     }
 
     /**

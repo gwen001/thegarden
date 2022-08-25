@@ -63,17 +63,17 @@ class ProductController extends Controller
         return ProductResource::collection($t_products);
 
 
-        if( is_null($q) ) {
-            $t_products = Product::orderBy('id','DESC')->get();
-        } else {
-            $q = '%'.$q.'%';
-            $t_products = Product::where(function ($query) use ($q) {
-                $query->where('title', 'like', $q)
-                    ->orWhere('short_descr', 'like', $q);
-            })->orderBy('id','DESC')->get();
-        }
+        // if( is_null($q) ) {
+        //     $t_products = Product::orderBy('id','DESC')->get();
+        // } else {
+        //     $q = '%'.$q.'%';
+        //     $t_products = Product::where(function ($query) use ($q) {
+        //         $query->where('title', 'like', $q)
+        //             ->orWhere('short_descr', 'like', $q);
+        //     })->orderBy('id','DESC')->get();
+        // }
 
-        return ProductResource::collection($t_products);
+        // return ProductResource::collection($t_products);
     }
 
     /**
