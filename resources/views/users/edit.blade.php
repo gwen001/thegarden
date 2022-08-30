@@ -60,7 +60,7 @@
             </form>
         </div>
         <div class="col col-3 text-center">
-            @if( strlen($user->picture) )
+            @if( $user->picture && strlen($user->picture) )
                 <img src="/img/users/{{ $user->picture }}" style="max-width:250px">
             @else
                 <img src="/img/users/default.png">
