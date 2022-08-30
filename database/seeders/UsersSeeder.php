@@ -24,6 +24,6 @@ class UsersSeeder extends Seeder
             });
         }
 
-        \App\Models\User::factory(3)->create();
+        \App\Models\User::factory(5)->create();
     }
 }
