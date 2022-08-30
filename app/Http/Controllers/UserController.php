@@ -97,7 +97,8 @@ class UserController extends Controller
             $user->save();
         }
 
-        $response = Http::withHeaders(['Content-Type: application/x-www-form-urlencoded'])->put(env('API_URL').'/users/'.$user->id, $t_datas);
+        // $response = Http::withHeaders(['Content-Type: application/x-www-form-urlencoded'])->put(env('API_URL').'/users/'.$user->id, $t_datas);
+        $response = Http::put(env('API_URL').'/users/'.$user->id, $t_datas);
         // var_dump($response);
 
         if( $response->ok() ) {
