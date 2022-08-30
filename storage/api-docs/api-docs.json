@@ -315,6 +315,12 @@
                                     },
                                     "fullname": {
                                         "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
                                     }
                                 },
                                 "type": "object"

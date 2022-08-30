@@ -133,6 +133,14 @@ class UserController extends Controller
      *                     property="fullname",
      *                     type="string"
      *                 ),
+     *                 @OA\Property(
+     *                     property="address",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="phone",
+     *                     type="string"
+     *                 ),
      *             )
      *         )
      *      ),
