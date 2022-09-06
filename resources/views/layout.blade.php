@@ -27,6 +27,9 @@
                             <li class="list-group-item border-0"><a href="{{ route('cart.show') }}">Cart</a></li>
                             @auth
                                 <li class="list-group-item border-0"><a href="{{ url('/dashboard') }}">My account</a></li>
+                                @if( Auth::user()->role == 'admin' )
+                                    <li class="list-group-item border-0"><a href="{{ url('/dashboard') }}">Admin</a></li>
+                                @endif
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="r" value="{!! request()->get('r') !!}">
