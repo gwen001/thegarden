@@ -2,12 +2,27 @@
 
 @section('main')
 <div id="p-dashboard">
+    @if( $user->role == 'admin' )
+    <div class="row">
+        <div class="col col-12">
+            <div class="alert alert-danger">
+                    Holy cow you're an admin !
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col col-3">@include('components/user-menu',['active'=>'profile'])</div>
         <div class="col col-1"></div>
         <div class="col col-5">
             <form method="POST" action="{{ route('users.update') }}" enctype="multipart/form-data">
                 @csrf
+                <div class="mb-3 row">
+                    <label class="col-sm-4 col-form-label">ID</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control-plaintext" value="{{ $user->id }}" readonly>
+                    </div>
+                </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">Username</label>
                     <div class="col-sm-8">
