@@ -40,6 +40,57 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+        // var_dump($request->get('id'));
+
+        // OK
+        // $p = Product::Find($request->get('id'));
+
+        // OK
+        // $p = Product::where('id',$request->input('id'))->get();
+        // $p = DB::table('users')->where('id', $_GET['id'])->get();
+        // NOT OK
+        // $p = Product::whereRaw('id='.$request->input('id'))->get();
+        // $p = DB::table('products')->whereRaw("id=".$_GET['id'])->get();
+        // $p = DB::table('products')->whereRaw("id='".$_GET['id']."'")->get();
+
+        // OK
+        // $p = DB::select('SELECT * FROM products WHERE id = ?', [$request->input('id')]);
+        // $p = DB::select('SELECT * FROM products WHERE id = :id', ['id'=>$request->input('id')]);
+        // NOT OK
+        // $p = DB::select('SELECT * FROM products WHERE id = '.$request->input('id'));
+
+        // OK
+        // $p = DB::statement('SELECT * FROM products WHERE id = ?', [$request->input('id')]);
+        // NOT OK
+        // $p = DB::statement('SELECT * FROM products WHERE id = '.$request->input('id'));
+
+
+        // $p = DB::table('products')->select(DB::raw('count(*) as '.$_GET['c']))->where('id',$_GET['id'])->get();
+        // $p = DB::table('products')->selectRaw($_GET['c'])->get();
+        // $p = DB::table('products')->where('id',$_GET['id'])->havingRaw($_GET['c'].' > 0')->get();
+        // $p = DB::table('products')->where('id',$_GET['id'])->orderByRaw($_GET['c'])->get();
+        // $p = DB::table('products')->where('id',$_GET['id'])->groupByRaw($_GET['c'])->get();
+
+
+        // ???
+        // $p = DB::raw("SELECT * FROM products WHERE id = ".$_GET['id']);
+        // $p = DB::table('products')->select( DB::raw('SELECT * FROM products WHERE id = '.$request->input('id')) );
+        // $p = DB::table('products')->select( DB::raw('SELECT * FROM products WHERE id = '.$request->input('id')) );
+
+
+        // SOSO
+        // $p = Product::where($request->input('colname'), 'somedata')->get();
+        // $p = Product::query()->orderBy($request->input('sortBy'))->get();
+
+
+
+
+        // var_dump($p);
+
+        // exit();
+
+
+
         $q = $request->query('q',null);
 
         $query = 'SELECT * FROM products';

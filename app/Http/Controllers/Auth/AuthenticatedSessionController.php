@@ -13,9 +13,10 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('auth.login');
     }
@@ -28,6 +29,19 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        // var_dump( $request->method() );
+        // var_dump( $request->query('q') );
+        // var_dump( $request->get('q') );
+        // var_dump( $request->post('q') );
+        // var_dump( $request->all() );
+        // var_dump( $request->collect() );
+        // var_dump( $request->input() );
+        // var_dump( $request->input('q') );
+        // var_dump( $request->post() );
+        // var_dump( Request::post() );
+        // var_dump( $request->input('xxx') );
+        // exit();
+
         $request->authenticate();
 
         $request->session()->regenerate();

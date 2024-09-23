@@ -20,19 +20,19 @@
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">ID</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control-plaintext" value="{{ $user->id }}" readonly>
+                        <p class="form-control-plaintext">{{ $user->id }}</p>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">Username</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control-plaintext" value="{{ $user->username }}" readonly>
+                        <p class="form-control-plaintext">{{ $user->username }}</p>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">API token</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control-plaintext" value="{{ $user->api_token }}" readonly>
+                        <p class="form-control-plaintext">{{ $user->api_token }}</p>
                     </div>
                 </div>
                 <div class="mb-3 row">
@@ -68,7 +68,7 @@
                 <div class="mb-3 row">
                     <label class="col-sm-4 col-form-label">Created at</label>
                     <div class="col-sm-8">
-                        <input type="text" readonly class="form-control-plaintext" value="{{ date('Y-m-d H:i:s', strtotime($user->created_at)) }}">
+                        <p class="form-control-plaintext">{{ date('Y-m-d H:i:s', strtotime($user->created_at)) }}</p>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>

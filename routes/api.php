@@ -19,11 +19,10 @@ use App\Http\Controllers\Api\OrderController;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
-// });
 
-Route::middleware('api')->resource('products', ProductController::class);
-Route::middleware('auth:api')->resource('orders', OrderController::class);
-Route::middleware('api')->resource('users', UserController::class);
+Route::resource('products', ProductController::class);
+Route::middleware(['auth:api'])->resource('orders', OrderController::class);
+Route::middleware(['auth:api'])->resource('users', UserController::class);
 
 Route::fallback(function(){
     return response()->json( ['error'=>1,'message'=>'Not found.'], 404 );

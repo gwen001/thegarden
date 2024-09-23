@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Order;
 use App\Http\Resources\OrderResource;
 use DB;
@@ -152,6 +153,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -190,8 +192,9 @@ class OrderController extends Controller
      *      )
      * )
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        // The action is authorized...
         $q = "SELECT * FROM orders WHERE id='".$id."'";
         // var_dump($q);
         $datas = DB::select($q);
@@ -212,6 +215,13 @@ class OrderController extends Controller
         $rorder['protected_card_number'] = str_repeat('*',12) . substr($order->card_number,-4);
         $rorder['protected_card_cvv'] = str_repeat('*',2) . substr($order->card_cvv,-1);
         $rorder['protected_card_expiration'] = $order->card_expiration;
+
+        Gate::authorize('order-view',  $order);
+
+        // var_dump($request->user()->id);
+        // if ($request->user()->cannot('view', $order)) {
+        //     exit('404');
+        // }
 
         return $rorder;
     }

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\HtmlString;
+use Illuminate\Contracts\Support\Htmlable;
+
 class ProductController extends Controller
 {
     /**
