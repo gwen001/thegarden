@@ -21,8 +21,8 @@ use App\Http\Controllers\Api\OrderController;
 //     return $request->user();
 
 Route::resource('products', ProductController::class);
+Route::resource('users', UserController::class);
 Route::middleware(['auth:api'])->resource('orders', OrderController::class);
-Route::middleware(['auth:api'])->resource('users', UserController::class);
 
 Route::fallback(function(){
     return response()->json( ['error'=>1,'message'=>'Not found.'], 404 );
