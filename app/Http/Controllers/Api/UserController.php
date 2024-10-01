@@ -158,12 +158,14 @@ class UserController extends Controller
             return abort(404);
         }
 
-        // var_dump($request->all());
-        foreach( $request->all() as $k=>$v ) {
-            $user->$k = $v;
-        }
+        return $user->fill( $request->all() )->save();
 
-        return $user->save();
+        // // var_dump($request->all());
+        // foreach( $request->all() as $k=>$v ) {
+        //     $user->$k = $v;
+        // }
+
+        // return $user->save();
     }
 
     /**

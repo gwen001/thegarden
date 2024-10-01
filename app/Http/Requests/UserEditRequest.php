@@ -28,6 +28,7 @@ class UserEditRequest extends FormRequest
             'fullname' => 'required|max:64',
             'address' => 'required|max:255',
             'phone' => 'required|max:16',
+            'role' => 'max:64',
         ];
     }
 }
