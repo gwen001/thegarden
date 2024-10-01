@@ -216,11 +216,11 @@ class OrderController extends Controller
         $rorder['protected_card_cvv'] = str_repeat('*',2) . substr($order->card_cvv,-1);
         $rorder['protected_card_expiration'] = $order->card_expiration;
 
-        Gate::authorize('order-view',  $order);
+        // Gate::authorize('order-view',  $order);
 
         // var_dump($request->user()->id);
         // if ($request->user()->cannot('view', $order)) {
-        //     exit('404');
+        //     return abort(404);
         // }
 
         return $rorder;
