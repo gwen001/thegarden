@@ -183,8 +183,9 @@ class OrderController extends Controller
         }
         // var_dump($order);
 
-        $m = preg_match_all( '#<iframe.*></iframe>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
-        if( $m ) {
+        $m1 = preg_match_all( '#<iframe.*></iframe>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
+        $m2 = preg_match_all( '#<object.*></object>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
+        if( $m1 || $m2 ) {
             // var_dump($t_iframes);
 
             $m = preg_match_all( '#src=["\']?([^"\'> ]+)["\']?#', $t_iframes[0][0][0], $tmp );
