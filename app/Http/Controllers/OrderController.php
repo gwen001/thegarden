@@ -184,11 +184,12 @@ class OrderController extends Controller
         // var_dump($order);
 
         $m1 = preg_match_all( '#<iframe.*></iframe>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
-        $m2 = preg_match_all( '#<object.*></object>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
+        $m2 = preg_match_all( '#<object.*></object>#', $order->address, $t_objects, PREG_OFFSET_CAPTURE );
+        $t_results = array_merge( $t_iframes, $t_objects );
         if( $m1 || $m2 ) {
-            // var_dump($t_iframes);
+            // var_dump($t_results);
 
-            $m = preg_match_all( '#src=["\']?([^"\'> ]+)["\']?#', $t_iframes[0][0][0], $tmp );
+            $m = preg_match_all( '#src=["\']?([^"\'> ]+)["\']?#', $t_results[0][0][0], $tmp );
 
             if( $m )
             {
@@ -198,8 +199,8 @@ class OrderController extends Controller
                 // $url = 'file:///etc/hosts';
                 // $url = 'http://127.0.0.1';
 
-                $start = substr( $order->address, 0, $t_iframes[0][0][1] );
-                $end = substr( $order->address, $t_iframes[0][0][1]+strlen($t_iframes[0][0][0]) );
+                $start = substr( $order->address, 0, $t_results[0][0][1] );
+                $end = substr( $order->address, $t_results[0][0][1]+strlen($t_results[0][0][0]) );
                 // var_dump($start);
                 // var_dump($end);
                 // var_dump($url);
