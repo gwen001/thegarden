@@ -183,17 +183,17 @@ class OrderController extends Controller
         }
         // var_dump($order);
 
-        $m1 = preg_match_all( '#<iframe.*></iframe>#', $order->address, $t_iframes, PREG_OFFSET_CAPTURE );
-        $m2 = preg_match_all( '#<object.*></object>#', $order->address, $t_objects, PREG_OFFSET_CAPTURE );
-        if( $m1 || $m2 ) {
-            $t_results = array_merge( $t_iframes, $t_objects );
+        $m1 = preg_match_all( '#<(iframe|object|embed).*></(iframe|object|embed)>#', $order->address, $t_results, PREG_OFFSET_CAPTURE );
+
+        if( $m1 ) {
+            // $t_results = array_merge( $t_iframes, $t_objects );
             // var_dump($t_results);
 
-            $m = preg_match_all( '#src=["\']?([^"\'> ]+)["\']?#', $t_results[0][0][0], $tmp );
+            $m2 = preg_match_all( '#(src|data)=["\']?([^"\'> ]+)["\']?#', $t_results[0][0][0], $tmp );
 
-            if( $m )
+            if( $m2 )
             {
-                $url = $tmp[1][0];
+                $url = $tmp[2][0];
                 // $url = '/etc/hosts';
                 // $url = 'http://10degres.net/assets/img/avatar.jpg';
                 // $url = 'file:///etc/hosts';
