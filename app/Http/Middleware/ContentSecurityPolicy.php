@@ -32,7 +32,7 @@ class ContentSecurityPolicy
     {
         return "default-src 'self'; " .
                "style-src 'self' 'unsafe-inline'; " .
-               "script-src 'self' 'unsafe-inline' https://*.offsec.tools; " .
+               "script-src 'self' https://*.offsec.tools; " .
                "object-src 'none';";
     }
 }
